@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate, type Route } from "react-router";
-import { useAuth, ProtectedRoute } from "../context/AuthContext";
+import { useAuth, ProtectedRoute } from "../contexts/AuthContext";
 
 export function meta({}: Route.MetaArgs) {
   return [

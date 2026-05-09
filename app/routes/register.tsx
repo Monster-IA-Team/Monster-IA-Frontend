@@ -1,8 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { Link, type Route } from "react-router";
-import { authAPI } from "../api/auth";
-import { ProtectedRoute } from "../context/AuthContext";
-import type { RegisterRequest } from "../api/types";
+import { authAPI } from "../services/auth";
+import { ProtectedRoute } from "../contexts/AuthContext";
+import type { RegisterRequest } from "../services/types";
 
 export function meta({}: Route.MetaArgs) {
   return [
