@@ -47,9 +47,140 @@ export interface RegisterResponse {
   errors: string[];
 }
 
+export interface ResetPasswordRequest {
+  token: string;
+  new_password: string;
+}
+
+export interface ResetPasswordResponse {
+  is_success: boolean;
+  data: null;
+  message: string;
+  status_code: number;
+  errors: string[];
+}
+
 export interface User {
   id: string;
   email: string;
   username: string;
   roles: string[];
 }
+
+export interface Can {
+  id: string;
+  name: string;
+  description: string;
+  image_url: string;
+  average_rating: number;
+  is_drunk_by_user: boolean;
+}
+
+export interface Monster extends Can { }
+
+export interface PaginatedResponse<T> {
+  is_success: boolean;
+  data: {
+    items: T[];
+    total_elements: number;
+    total_pages: number;
+    current_page: number;
+    size: number;
+  };
+  message: string;
+  status_code: number;
+  errors: string[];
+}
+
+export interface PaginationParams {
+  page?: number;
+  size?: number;
+  sort_by?: string;
+  sort_order?: "asc" | "desc";
+}
+
+export interface Task {
+  start: string;
+  end: string;
+}
+
+export interface ScheduleRequest {
+  wake: string;
+  sleep: string;
+  tasks: Task[];
+  monster_count: number;
+}
+
+export interface ScheduleResponse {
+  is_success: boolean;
+  data: PlannerDetails;
+  message: string;
+  status_code: number;
+  errors: string[];
+}
+
+export interface PlannerItem {
+  id: string;
+  wake_time: string;
+  sleep_time: string;
+  desired_count: number;
+  created_at: string;
+  sessions_count: number;
+}
+
+export interface PlannerHistoryResponse {
+  is_success: boolean;
+  data: {
+    items: PlannerItem[];
+    total_elements: number;
+    total_pages: number;
+    current_page: number;
+    size: number;
+  };
+  message: string;
+  status_code: number;
+  errors: string[];
+}
+
+export interface PlannerPaginationParams {
+  page?: number;
+  size?: number;
+  sort_order?: "asc" | "desc";
+}
+
+export interface PlannerTask {
+  id: string;
+  title: string;
+  start_time: string;
+  end_time: string;
+}
+
+export interface DrinkSession {
+  start: string;
+  end: number;
+}
+
+export interface PlannerInfo {
+  drink_sessions: DrinkSession[];
+  covered_hours: number;
+  effectiveness: number;
+}
+
+export interface PlannerDetails {
+  id: string;
+  wake_time: string;
+  sleep_time: string;
+  desired_count: number;
+  created_at: string;
+  planner: PlannerInfo;
+  tasks: PlannerTask[];
+}
+
+export interface PlannerDetailsResponse {
+  is_success: boolean;
+  data: PlannerDetails;
+  message: string;
+  status_code: number;
+  errors: string[];
+}
+

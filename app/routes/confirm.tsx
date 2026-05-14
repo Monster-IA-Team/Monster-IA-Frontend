@@ -1,0 +1,127 @@
+import { useState, type FormEvent } from "react";
+import { Link, useNavigate, type Route } from "react-router";
+import { authAPI } from "../services/auth";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Confirm Account" },
+    { name: "description", content: "Confirm your account with email code" },
+  ];
+}
+
+export default function Confirm() {
+  const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      const response = await authAPI.activate(code);
+
+      if (!response.is_success) {
+        throw new Error(response.message || "Confirmation failed");
+      }
+
+      setSuccess(true);
+      setTimeout(() => navigate("/login"), 2000);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Confirmation failed";
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div
+      className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden"
+      style={{
+        backgroundColor: "#1a1a1a",
+        backgroundImage: `repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 2px,
+          rgba(255,255,255,.03) 2px,
+          rgba(255,255,255,.03) 4px
+        )`,
+      }}
+    >
+      {/* Corner info buttons */}
+      <div className="absolute top-6 right-6 flex gap-4">
+        <button className="w-10 h-10 border-2 border-lime-500 rounded-lg flex items-center justify-center text-lime-500 hover:bg-lime-500 hover:text-black transition-colors text-lg font-bold">
+          ?
+        </button>
+        <button className="w-10 h-10 border-2 border-lime-500 rounded-lg flex items-center justify-center text-lime-500 hover:bg-lime-500 hover:text-black transition-colors text-lg font-bold">
+          i
+        </button>
+      </div>
+
+      {/* Home button */}
+      <div className="absolute top-6 left-6">
+        <Link
+          to="/"
+          className="w-10 h-10 border-2 border-lime-500 rounded-lg flex items-center justify-center text-lime-500 hover:bg-lime-500 hover:text-black transition-colors text-lg font-bold"
+          title="Home"
+        >
+          ⌂
+        </Link>
+      </div>
+
+      <div className="w-full max-w-sm">
+        <h1 className="text-3xl text-white text-center mb-8" style={{ fontStyle: "italic" }}>
+          Confirm Account
+        </h1>
+
+        <p className="text-lime-500 text-center mb-8">
+          Enter the confirmation code sent to your email
+        </p>
+
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          {error && (
+            <div className="border-2 border-red-500 bg-red-900/20 p-3 rounded-lg">
+              <p className="text-red-400 text-sm font-mono">{error}</p>
+            </div>
+          )}
+
+          {success && (
+            <div className="border-2 border-lime-500 bg-lime-900/20 p-3 rounded-lg">
+              <p className="text-lime-400 text-sm font-mono">Confirmed! Redirecting to login...</p>
+            </div>
+          )}
+
+          <input
+            type="text"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            placeholder="Confirmation Code"
+            required
+            className="w-full px-4 py-3 bg-transparent border-2 border-lime-500 text-white placeholder-lime-500/50 focus:outline-none focus:bg-lime-500/10 transition-colors rounded-lg text-center text-lg tracking-widest"
+          />
+
+          {/* Buttons */}
+          <div className="flex gap-4 justify-center pt-6">
+            <button
+              type="submit"
+              disabled={loading || success}
+              className="px-8 py-3 border-2 border-lime-500 text-lime-500 font-bold rounded-lg hover:bg-lime-500 hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "..." : "Confirm"}
+            </button>
+            <Link
+              to="/login"
+              className="px-8 py-3 border-2 border-lime-500 text-lime-500 font-bold rounded-lg hover:bg-lime-500 hover:text-black transition-colors text-center"
+            >
+              Back to Login
+            </Link>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Link, type Route } from "react-router";
+import { Link, useNavigate, type Route } from "react-router";
 import { authAPI } from "../services/auth";
 import { ProtectedRoute } from "../contexts/AuthContext";
 import type { RegisterRequest } from "../services/types";
@@ -12,6 +12,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 function RegisterPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterRequest>({
     email: "",
     username: "",
@@ -59,7 +60,7 @@ function RegisterPage() {
       }
 
       setSuccess(true);
-      setTimeout(() => window.location.href = "/login", 2000);
+      setTimeout(() => navigate("/confirm"), 2000);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Registration failed";
       setError(message);
@@ -220,6 +221,18 @@ function RegisterPage() {
               Back to Login
             </Link>
           </div>
+
+          {success && (
+            <div className="text-center pt-4">
+              <p className="text-lime-500 text-sm mb-2">Check your email for confirmation code</p>
+              <Link
+                to="/confirm"
+                className="text-lime-500 hover:text-lime-400 underline"
+              >
+                Enter confirmation code
+              </Link>
+            </div>
+          )}
         </form>
       </div>
     </div>

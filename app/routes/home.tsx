@@ -113,7 +113,7 @@ export default function Home() {
             PLANER
           </Link>
           <Link
-            to="/lista"
+            to="/list"
             className="px-12 py-6 border-2 border-lime-500 text-lime-500 font-bold text-lg rounded-lg hover:bg-lime-500 hover:text-black transition-colors"
           >
             LISTA
