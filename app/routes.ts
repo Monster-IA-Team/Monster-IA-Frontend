@@ -16,6 +16,7 @@ export default [
   route("planer", "routes/user/planer.tsx"),
   route("planners", "routes/user/planner-list.tsx"),
   route("planner/:plannerId", "routes/user/planer-details.tsx"),
+  route("taste-quiz", "routes/user/taste-quiz.tsx"),
 
   route("admin", "routes/admin/admin.tsx", [
     index("routes/admin/dashboard.tsx"),
