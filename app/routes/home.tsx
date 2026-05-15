@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
 import { Link } from "react-router";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -113,7 +113,7 @@ export default function Home() {
             PLANER
           </Link>
           <Link
-            to="/lista"
+            to="/list"
             className="px-12 py-6 border-2 border-lime-500 text-lime-500 font-bold text-lg rounded-lg hover:bg-lime-500 hover:text-black transition-colors"
           >
             LISTA

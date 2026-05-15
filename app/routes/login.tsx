@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate, type Route } from "react-router";
-import { useAuth, ProtectedRoute } from "../context/AuthContext";
+import { useAuth, ProtectedRoute } from "../contexts/AuthContext";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -117,14 +117,36 @@ function LoginPage() {
           </div>
 
           {/* Register section */}
-          <div className="pt-8 border-t-2 border-lime-500/30 mt-8">
-            <p className="text-lime-500 mb-4">Not logged in? Register here</p>
-            <Link
-              to="/register"
-              className="w-full block px-8 py-3 border-2 border-lime-500 text-lime-500 font-bold rounded-lg hover:bg-lime-500 hover:text-black transition-colors text-center"
-            >
-              Register
-            </Link>
+          <div className="pt-8 border-t-2 border-lime-500/30 mt-8 space-y-4">
+            <div>
+              <p className="text-lime-500 mb-4">Not logged in? Register here</p>
+              <Link
+                to="/register"
+                className="w-full block px-8 py-3 border-2 border-lime-500 text-lime-500 font-bold rounded-lg hover:bg-lime-500 hover:text-black transition-colors text-center"
+              >
+                Register
+              </Link>
+            </div>
+
+            <div>
+              <p className="text-lime-500 text-sm mb-2">Have a confirmation code?</p>
+              <Link
+                to="/confirm"
+                className="w-full block px-8 py-3 border-2 border-lime-500 text-lime-500 font-bold rounded-lg hover:bg-lime-500 hover:text-black transition-colors text-center"
+              >
+                Confirm Account
+              </Link>
+            </div>
+
+            <div>
+              <p className="text-lime-500 text-sm mb-2">Forgot your password?</p>
+              <Link
+                to="/forgot-password"
+                className="w-full block px-8 py-3 border-2 border-lime-500 text-lime-500 font-bold rounded-lg hover:bg-lime-500 hover:text-black transition-colors text-center"
+              >
+                Reset Password
+              </Link>
+            </div>
           </div>
         </form>
       </div>
