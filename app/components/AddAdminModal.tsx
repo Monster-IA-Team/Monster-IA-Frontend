@@ -22,19 +22,16 @@ const AddAdminModal: React.FC<AddAdminModalProps> = ({ isOpen, onClose, onConfir
     setIsSubmitting(true);
     await onConfirm(formData);
     setIsSubmitting(false);
-    // Reset form after success
     setFormData({ email: '', username: '', password: '', confirm_password: '' });
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/80 backdrop-blur-sm" 
         onClick={onClose}
       ></div>
-      
-      {/* Modal Window */}
+
       <div className="relative w-full max-w-md bg-[#1a1a1a] border-2 border-lime-500 rounded-lg p-8 shadow-[0_0_50px_rgba(163,230,53,0.2)]">
         <button 
           onClick={onClose}
