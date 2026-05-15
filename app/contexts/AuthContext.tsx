@@ -1,13 +1,12 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import { useNavigate } from "react-router";
+import { Navigate } from "react-router";
 import { authAPI } from "../services/auth";
 import type { User, LoginRequest } from "../services/types";
-
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   error: string | null;
-  login: (credentials: LoginRequest) => Promise<void>;
+  login: (credentials: LoginRequest) => Promise<User>;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -57,6 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("user", JSON.stringify(userData));
 
       setUser(userData);
+      return userData; // ZMIANA: Zwracamy usera, by użyć go w login.tsx
     } catch (err) {
       const message = err instanceof Error ? err.message : "Login failed";
       setError(message);
@@ -99,27 +99,31 @@ export function useAuth() {
 }
 
 export function ProtectedRoute({
-  children,
-  requireAuth = true,
-}: {
+                                 children,
+                                 requireAuth = false,
+                                 requireGuest = false,
+                                 allowedRoles,
+                               }: {
   children: ReactNode;
   requireAuth?: boolean;
+  requireGuest?: boolean;
+  allowedRoles?: string[];
 }) {
-  const { isAuthenticated, loading } = useAuth();
-  const navigate = useNavigate();
+  const { user, isAuthenticated, loading } = useAuth();
 
-  useEffect(() => {
-    if (loading) return;
+  if (loading) return <div className="min-h-screen bg-black flex items-center justify-center text-lime-500 font-mono">Loading...</div>;
 
-    if (requireAuth && !isAuthenticated) {
-      navigate("/login");
-    } else if (!requireAuth && isAuthenticated) {
-      navigate("/");
+  if (requireGuest && isAuthenticated) return <Navigate to="/" replace />;
+  if (requireAuth && !isAuthenticated) return <Navigate to="/login" replace />;
+
+  if (allowedRoles && user && user.roles) {
+    // ZMIANA: Normalizujemy role użytkownika i role wymagane do małych liter
+    const userRolesLower = user.roles.map(r => r.toLowerCase());
+    const hasRole = allowedRoles.some((role) => userRolesLower.includes(role.toLowerCase()));
+
+    if (!hasRole) {
+      return <Navigate to="/" replace />;
     }
-  }, [isAuthenticated, loading, requireAuth, navigate]);
-
-  if (loading) {
-    return <div className="min-h-screen bg-black flex items-center justify-center text-lime-500">Loading...</div>;
   }
 
   return <>{children}</>;

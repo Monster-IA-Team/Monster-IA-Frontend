@@ -1,5 +1,11 @@
 import { apiClient } from "./client";
-import type { ScheduleRequest, ScheduleResponse, PlannerHistoryResponse, PlannerPaginationParams, PlannerDetailsResponse } from "./types";
+import type {
+  ScheduleRequest,
+  ScheduleResponse,
+  PlannerHistoryResponse,
+  PlannerPaginationParams,
+  PlannerDetailsResponse,
+} from "./types";
 
 export const plannerAPI = {
   createSchedule(schedule: ScheduleRequest): Promise<ScheduleResponse> {

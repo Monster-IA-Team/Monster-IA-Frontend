@@ -32,6 +32,18 @@ export const authAPI = {
     return Promise.resolve();
   },
 
+  confirmResetPassword(data: {
+    token: string,
+    password: string,
+    confirm_password: string
+  }) : Promise<ActivationResponse> {
+    return apiClient.post<ActivationResponse>(
+        "/auth/reset-password/confirm",
+        data,
+        false
+    );
+  },
+
   refreshToken(refreshToken: string): Promise<AuthResponse> {
     return apiClient.post<AuthResponse>(
       "/auth/refresh",

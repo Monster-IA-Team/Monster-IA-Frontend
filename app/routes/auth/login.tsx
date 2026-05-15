@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate, type Route } from "react-router";
-import { useAuth, ProtectedRoute } from "../contexts/AuthContext";
+import { useAuth, ProtectedRoute } from "../../contexts/AuthContext";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -21,10 +21,18 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      await login({ email, password });
-      navigate("/");
+      const loggedInUser = await login({ email, password });
+
+      // Sprawdzamy rolę bez względu na wielkość liter
+      const isAdmin = loggedInUser.roles.some(role => role.toLowerCase() === "admin");
+
+      if (isAdmin) {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
     } catch {
-      // Error is handled by context
+      // Błąd obsłużony przez context
     } finally {
       setLoading(false);
     }
@@ -156,8 +164,8 @@ function LoginPage() {
 
 export default function Login() {
   return (
-    <ProtectedRoute requireAuth={false}>
-      <LoginPage />
-    </ProtectedRoute>
+      <ProtectedRoute requireGuest={true}>
+        <LoginPage />
+      </ProtectedRoute>
   );
 }

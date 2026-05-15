@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, type Route } from "react-router";
-import { monstersAPI } from "../services/monsters";
-import { ProtectedRoute } from "../contexts/AuthContext";
-import type { Monster } from "../services/types";
+import { monstersAPI } from "../../services/monsters";
+import { ProtectedRoute } from "../../contexts/AuthContext";
+import type { Monster } from "../../services/types";
 
 export function meta({}: Route.MetaArgs) {
   return [

@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
-import { Link, type Route } from "react-router";
-import { authAPI } from "../services/auth";
+import {Link, type Route, useNavigate} from "react-router";
+import { authAPI } from "../../services/auth";
+import { ProtectedRoute } from "../../contexts/AuthContext";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,11 +10,13 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function ForgotPassword() {
+function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,6 +31,7 @@ export default function ForgotPassword() {
       }
 
       setSuccess(true);
+      setTimeout(() => navigate("/set-new-password"), 2000);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to send reset email";
       setError(message);
@@ -123,5 +127,13 @@ export default function ForgotPassword() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function ForgotPassword() {
+  return (
+      <ProtectedRoute requireGuest={true}>
+        <ForgotPasswordPage />
+      </ProtectedRoute>
   );
 }

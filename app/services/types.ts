@@ -76,7 +76,7 @@ export interface Can {
   is_drunk_by_user: boolean;
 }
 
-export interface Monster extends Can { }
+export interface Monster extends Can {}
 
 export interface PaginatedResponse<T> {
   is_success: boolean;
@@ -100,6 +100,7 @@ export interface PaginationParams {
 }
 
 export interface Task {
+  title?: string;
   start: string;
   end: string;
 }
@@ -113,17 +114,17 @@ export interface ScheduleRequest {
 
 export interface ScheduleResponse {
   is_success: boolean;
-  data: PlannerDetails;
+  data: string;
   message: string;
   status_code: number;
   errors: string[];
 }
 
-export interface PlannerItem {
+export interface PlannerTableRes {
   id: string;
   wake_time: string;
   sleep_time: string;
-  desired_count: number;
+  desired_count: number | null;
   created_at: string;
   sessions_count: number;
 }
@@ -131,7 +132,7 @@ export interface PlannerItem {
 export interface PlannerHistoryResponse {
   is_success: boolean;
   data: {
-    items: PlannerItem[];
+    items: PlannerTableRes[];
     total_elements: number;
     total_pages: number;
     current_page: number;
@@ -148,39 +149,72 @@ export interface PlannerPaginationParams {
   sort_order?: "asc" | "desc";
 }
 
-export interface PlannerTask {
+export interface TaskDetailRes {
   id: string;
-  title: string;
+  title: string | null;
   start_time: string;
   end_time: string;
 }
 
 export interface DrinkSession {
-  start: string;
-  end: number;
+  time: string;
+  amount?: string;
+  [key: string]: any;
 }
-
 export interface PlannerInfo {
-  drink_sessions: DrinkSession[];
-  covered_hours: number;
-  effectiveness: number;
+  drink_sessions?: DrinkSession[];
+  covered_hours?: number;
+  effectiveness?: number;
+  [key: string]: any;
 }
 
-export interface PlannerDetails {
+export interface PlannerDetailRes {
   id: string;
   wake_time: string;
   sleep_time: string;
-  desired_count: number;
-  created_at: string;
+  desired_count: number | null;
+  created_at: string | null;
   planner: PlannerInfo;
-  tasks: PlannerTask[];
+  tasks: TaskDetailRes[];
 }
 
 export interface PlannerDetailsResponse {
   is_success: boolean;
-  data: PlannerDetails;
+  data: PlannerDetailRes;
   message: string;
   status_code: number;
   errors: string[];
 }
 
+export interface UserRes {
+  id: string;
+  username: string;
+  email: string;
+  is_active: boolean;
+  roles: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateAdminRequest {
+  email: string;
+  username: string;
+  password: string;
+  confirm_password: string;
+}
+
+export interface BasicResponse {
+  is_success: boolean;
+  data: null;
+  message: string;
+  status_code: number;
+  errors: string[];
+}
+
+export interface AdminListResponse {
+  is_success: boolean;
+  data: UserRes[];
+  message: string;
+  status_code: number;
+  errors: string[];
+}

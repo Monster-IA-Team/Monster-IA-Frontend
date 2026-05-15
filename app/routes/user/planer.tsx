@@ -1,8 +1,8 @@
 import { useState, useEffect, type FormEvent } from "react";
 import { Link, type Route } from "react-router";
-import { plannerAPI } from "../services/planner";
-import { ProtectedRoute } from "../contexts/AuthContext";
-import type { Task, PlannerItem, PlannerDetails } from "../services/types";
+import { plannerAPI } from "../../services/planner";
+import { ProtectedRoute } from "../../contexts/AuthContext";
+import type { Task, PlannerItem, PlannerDetails } from "../../services/types";
 
 export function meta({ }: Route.MetaArgs) {
   return [

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate, type Route } from "react-router";
-import { authAPI } from "../services/auth";
+import { authAPI } from "../../services/auth";
+import { ProtectedRoute } from "../../contexts/AuthContext";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,7 +10,7 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Activate() {
+function ActivatePage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -76,5 +77,13 @@ export default function Activate() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function Activate() {
+  return (
+      <ProtectedRoute requireGuest={true}>
+        <ActivatePage />
+      </ProtectedRoute>
   );
 }

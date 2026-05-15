@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate, type Route } from "react-router";
-import { authAPI } from "../services/auth";
+import { authAPI } from "../../services/auth";
+import { ProtectedRoute } from "../../contexts/AuthContext";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,7 +10,7 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Confirm() {
+function ConfirmPage() {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -123,5 +124,13 @@ export default function Confirm() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function Confirm() {
+  return (
+      <ProtectedRoute requireGuest={true}>
+        <ConfirmPage />
+      </ProtectedRoute>
   );
 }
