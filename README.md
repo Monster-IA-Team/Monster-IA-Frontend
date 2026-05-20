@@ -1,87 +1,46 @@
-# Welcome to React Router!
+Monster-IA-Frontend
+Wymagania
+Node.js
+npm
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Instalacja
+Pobranie kodu źródłowego projektu:
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+git clone https://github.com/Monster-IA-Team/Monster-IA-Frontend.git
+cd Monster-IA-Frontend
 
-## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+Instalacja zależności projektowych:
 
-## Getting Started
-
-### Installation
-
-Install the dependencies:
-
-```bash
 npm install
-```
 
-### Development
 
-Start the development server with HMR:
+Konfiguracja zmiennych środowiska:
 
-```bash
+cp .env.example .env.local
+
+
+Domyślnie aplikacja jest skonfigurowana do komunikacji z API pod adresem:
+
+VITE_API_URL=http://localhost:8000/api
+
+
+Uruchomienie
+Serwer deweloperski
 npm run dev
-```
 
-Your application will be available at `http://localhost:5173`.
 
-## Building for Production
+Aplikacja webowa będzie dostępna pod adresem: http://localhost:5173/
 
-Create a production build:
+Architektura
+Framework: React 19
+Routing: React Router 7
+Styling: Tailwind CSS 4
+Bundler: Vite
+Język: TypeScript
+Server-Side Rendering: Włączone (SSR)
 
-```bash
-npm run build
-```
+Zmienne środowiska
+Dostępne zmienne środowiska w pliku .env.local:
 
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+VITE_API_URL - Adres URL backendu API (domyślnie: http://localhost:8000/api)
