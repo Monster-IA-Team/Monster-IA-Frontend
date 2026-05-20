@@ -65,7 +65,7 @@ export default function Home() {
               Create Account
             </Link>
             <Link
-                to="/quiz"
+                to="/taste-quiz"
                 className="px-12 py-4 border-2 border-lime-500 text-lime-500 font-bold text-lg rounded-lg hover:bg-lime-500/10 transition-colors uppercase tracking-wider"
             >
               Take Quiz
